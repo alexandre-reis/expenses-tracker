@@ -7,9 +7,6 @@ function App() {
       <View>
         <Text style={{color: 'red'}}>teste</Text>
       </View>
-      <View>
-        <Text>batata</Text>
-      </View>
     </SafeAreaView>
   );
 }
