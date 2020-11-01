@@ -10,6 +10,7 @@ import {
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import { Container, Texto, BotaoEntrar, TextoBotao } from './src/styles';
 
 function App() {
   const [feed, setFeed] = useState([]);
@@ -25,9 +26,12 @@ function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>teste</Text>
-      <Text>teste2</Text>
+    <Container style={styles.container}>
+      <Texto>teste</Texto>
+      <Texto>teste2</Texto>
+      <BotaoEntrar>
+        <TextoBotao>Entrar</TextoBotao>
+      </BotaoEntrar>
       <FontAwesome name="user" />
       <Feather name="gift" size={30} color="red" />
 
@@ -35,7 +39,7 @@ function App() {
         <Text style={styles.texto}>Valor</Text>
         <TextInput style={styles.input} placeholder="Informe o valor" />
       </ScrollView> */}
-    </View>
+    </Container>
   );
 }
 
