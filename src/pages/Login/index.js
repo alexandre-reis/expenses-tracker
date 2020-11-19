@@ -20,8 +20,11 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signIn } = useContext(AuthContext);
 
-  function handleLogin() {}
+  function handleLogin() {
+    signIn(email, password);
+  }
 
   return (
     <Background>
@@ -42,6 +45,7 @@ const Login = () => {
             placeholder="Senha"
             autoCorrect={false}
             autoCapitalize="none"
+            secureTextEntry={true}
             value={password}
             onChangeText={(text) => setPassword(text)}
           />

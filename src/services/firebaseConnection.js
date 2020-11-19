@@ -13,10 +13,6 @@ let firebaseConfig = {
 };
 // Initialize Firebase
 
-console.log('1');
-// if (!firebase.app.length) {
-console.log('2');
 firebase.initializeApp(firebaseConfig);
-// }
 
 export default firebase;
