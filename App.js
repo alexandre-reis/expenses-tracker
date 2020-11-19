@@ -1,25 +1,19 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import 'react-native-gesture-handler';
-import firebase from './src/services/firebase';
-import Routes from './src/routes';
-import { StatusBar } from 'react-native';
+import { View, StatusBar } from 'react-native';
 
-function App() {
+import AuthProvider from './src/contexts/auth';
+
+import Routes from './src/routes/index';
+
+export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="#131313" barStyle="light-content" />
-      <Routes />
+      <AuthProvider>
+        <StatusBar backgroundColor="#131313" barStyle="light-content" />
+        <Routes />
+      </AuthProvider>
     </NavigationContainer>
-    // <Container style={styles.container}>
-    //   <Texto>teste</Texto>
-    //   <Texto>teste2</Texto>
-    //   <BotaoEntrar>
-    //     <TextoBotao>Entrar</TextoBotao>
-    //   </BotaoEntrar>
-    //   <Feather name="gift" size={30} color="red" />
-    // </Container>
   );
 }
-
-export default App;

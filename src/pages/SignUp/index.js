@@ -1,35 +1,42 @@
 import React, { useContext, useState } from 'react';
-import { Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth';
 
 import {
   Background,
   Container,
-  Titulo,
   AreaInput,
   Input,
   SubmitButton,
   SubmitText,
-  Link,
-  LinkText,
-} from './styles';
+} from '../Login/styles';
 
-const Login = () => {
-  const navigation = useNavigation();
-
+export default function SignUp() {
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleLogin() {}
+  const { signUp } = useContext(AuthContext);
+
+  function handleSignUp() {
+    signUp(email, password, nome);
+  }
 
   return (
     <Background>
       <Container>
-        <Titulo>Controle de gastos</Titulo>
         <AreaInput>
           <Input
-            placeholder="E-mail"
+            placeholder="Nome"
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={nome}
+            onChangeText={(text) => setNome(text)}
+          />
+        </AreaInput>
+
+        <AreaInput>
+          <Input
+            placeholder="Email"
             autoCorrect={false}
             autoCapitalize="none"
             value={email}
@@ -47,16 +54,10 @@ const Login = () => {
           />
         </AreaInput>
 
-        <SubmitButton onPress={handleLogin}>
-          <SubmitText>Acessar</SubmitText>
+        <SubmitButton onPress={handleSignUp}>
+          <SubmitText>Cadastrar</SubmitText>
         </SubmitButton>
-
-        <Link onPress={() => navigation.navigate('SignUp')}>
-          <LinkText>Criar sua conta</LinkText>
-        </Link>
       </Container>
     </Background>
   );
-};
-
-export default Login;
+}
