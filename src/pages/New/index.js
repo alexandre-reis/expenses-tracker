@@ -62,7 +62,7 @@ export default function New() {
 
     let user = firebase.database().ref('users').child(uid);
     await user.once('value').then((snapshot) => {
-      let saldo = parseFloat(snapshot.val().saldo).toFixed(2);
+      let saldo = parseFloat(snapshot.val().saldo);
 
       tipo === 'despesa'
         ? (saldo -= parseFloat(valor))

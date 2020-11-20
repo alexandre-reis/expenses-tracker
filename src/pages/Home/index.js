@@ -1,31 +1,60 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button, Text, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
+import { format } from 'date-fns';
 
 import Header from '../../components/Header';
 import HistoricoList from '../../components/HistoricoList';
 
+import firebase from '../../services/firebaseConnection';
+
 import { Background, Container, List, Nome, Saldo, Title } from './styles';
 
 export default function Home() {
-  const { user, signOut } = useContext(AuthContext);
+  const [historico, setHistorico] = useState([]);
+  const [saldo, setSaldo] = useState(0);
 
-  const [historico, setHistorico] = useState([
-    { key: '1', tipo: 'receita', valor: 1200 },
-    { key: '2', tipo: 'despesa', valor: 200 },
-    { key: '3', tipo: 'receita', valor: 40 },
-    { key: '4', tipo: 'receita', valor: 89.62 },
-    { key: '5', tipo: 'despesa', valor: 500 },
-    { key: '6', tipo: 'despesa', valor: 310 },
-  ]);
+  const { user, signOut } = useContext(AuthContext);
+  const uid = user && user.uid;
+
+  useEffect(() => {
+    async function loadList() {
+      await firebase
+        .database()
+        .ref('users')
+        .child(uid)
+        .on('value', (snapshot) => {
+          setSaldo(parseFloat(snapshot.val().saldo));
+        });
+
+      await firebase
+        .database()
+        .ref('historico')
+        .child(uid)
+        .orderByChild('date')
+        .on('value', (snapshot) => {
+          setHistorico([]);
+          snapshot.forEach((childItem) => {
+            let list = {
+              key: childItem.key,
+              tipo: childItem.val().tipo,
+              valor: childItem.val().valor,
+            };
+
+            setHistorico((oldArray) => [...oldArray, list].reverse());
+          });
+        });
+    }
+
+    loadList();
+  }, [uid]);
 
   return (
     <Background>
       <Header />
       <Container>
         <Nome>{user && user.nome}</Nome>
-
-        <Saldo>R$ 123,00</Saldo>
+        <Saldo>R$ {saldo}</Saldo>
       </Container>
 
       <Title>Histórico</Title>
