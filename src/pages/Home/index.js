@@ -14,7 +14,7 @@ export default function Home() {
   const [historico, setHistorico] = useState([]);
   const [saldo, setSaldo] = useState(0);
 
-  const { user, signOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const uid = user && user.uid;
 
   useEffect(() => {
